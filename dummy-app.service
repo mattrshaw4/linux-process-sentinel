@@ -1,0 +1,12 @@
+[Unit]
+Description=Dummy App — Sentinel Watch Target
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/dummy-app.sh
+Restart=no
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

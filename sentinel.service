@@ -1,0 +1,14 @@
+[Unit]
+Description=Process Sentinel — Service Watchdog
+After=network.target dummy-app.service
+Wants=dummy-app.service
+
+[Service]
+ExecStart=/usr/local/bin/sentinel.sh
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
