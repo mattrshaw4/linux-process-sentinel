@@ -2,13 +2,13 @@
 
 A bash-based service watchdog that monitors a target systemd service, automatically restarts it on failure, and logs every recovery event with timestamps and a running restart counter.
 
-Built as a Linux portfolio project covering the processes and services domain — systemd unit authoring, programmatic health checks, structured event logging, and the difference between systemd's built-in `Restart=` directive and an external watchdog.
+Built as a Linux portfolio project covering the processes and services domain, systemd unit authoring, programmatic health checks, structured event logging, and the difference between systemd's built-in `Restart=` directive and an external watchdog.
 
 ---
 
 ## What It Does
 
-The sentinel polls a target service every 10 seconds using `systemctl is-active`. If the service is down, the sentinel restarts it, waits 3 seconds, confirms recovery, and logs the result. Every event — alert, recovery, or failure to recover — is written to both a structured log file and the system journal via `logger`.
+The sentinel polls a target service every 10 seconds using `systemctl is-active`. If the service is down, the sentinel restarts it, waits 3 seconds, confirms recovery, and logs the result. Every event — alert, recovery, or failure to recover is written to both a structured log file and the system journal via `logger`.
 
 ```
 [2026-05-09 08:39:21] [ALERT] dummy-app is inactive. Restarting... (restart #1)
@@ -38,7 +38,7 @@ dummy-app.service (Restart=no)
 The sentinel owns recovery. If systemd auto-restarted the target too, there would be no way to prove the watchdog actually did anything. The target is deliberately left without a restart policy so the sentinel's intervention is visible and measurable.
 
 **Why `Restart=always` on the sentinel?**
-The watchdog itself should never stay dead. If the sentinel crashes for any reason, systemd brings it back — so monitoring is always running.
+The watchdog itself should never stay dead. If the sentinel crashes for any reason, systemd brings it back so monitoring is always running.
 
 ---
 
